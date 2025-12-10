@@ -300,6 +300,26 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
 <script src="{{ asset('js/geofirestore.js') }}"></script>
 <script src="https://cdn.firebase.com/libs/geofire/5.0.1/geofire.min.js"></script>
+
+<script type="text/javascript">
+    // Initialize Firebase
+    var firebaseConfig = {
+        apiKey: "<?php echo env('FIREBASE_API_KEY'); ?>",
+        authDomain: "<?php echo env('FIREBASE_AUTH_DOMAIN'); ?>",
+        databaseURL: "<?php echo env('FIREBASE_DATABASE_URL'); ?>",
+        projectId: "<?php echo env('FIREBASE_PROJECT_ID'); ?>",
+        storageBucket: "<?php echo env('FIREBASE_STORAGE_BUCKET'); ?>",
+        messagingSenderId: "<?php echo env('FIREBASE_MESSAGING_SENDER_ID'); ?>",
+        appId: "<?php echo env('FIREBASE_APP_ID'); ?>",
+        measurementId: "<?php echo env('FIREBASE_MEASUREMENT_ID'); ?>"
+    };
+    
+    // Initialize Firebase only if not already initialized
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+</script>
+
 <script src="{{ asset('js/chosen.jquery.js') }}"></script>
 <script src="{{ asset('js/bootstrap-tagsinput.js') }}"></script>
 <script src="{{ asset('js/crypto-js.js') }}"></script>
