@@ -18,6 +18,10 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
+//Gestion Fedapay
+Route::post('settings/payment/fedapay/save', [FedapayController::class, 'saveFedapay'])
+    ->name('settings.payment.fedapay.save');
+
 Route::get('lang/change', [App\Http\Controllers\LangController::class, 'change'])->name('changeLang');
 
 Route::post('payments/razorpay/createorder', [App\Http\Controllers\RazorPayController::class, 'createOrderid']);

@@ -1,8 +1,11 @@
 @extends('layouts.app')
+
 @section('content')
-    <div class="page-wrapper">
-        <div class="card">
-            <div class="payment-top-tab mt-3 mb-3">
+<div class="page-wrapper">
+    <div class="card">
+
+        {{-- TABS DES MOYENS DE PAIEMENT --}}
+        <div class="payment-top-tab mt-3 mb-3">
                 <ul class="nav nav-tabs card-header-tabs align-items-end">
                     <li class="nav-item">
                         <a class="nav-link stripe_active_label" href="{!! url('settings/payment/stripe') !!}"><i
@@ -90,337 +93,230 @@
                     </li>
                 </ul>
             </div>
-            <div class="card-body">
-                <div class="row restaurant_payout_create">
-                    <div class="restaurant_payout_create-inner">
-                        <fieldset>
-                            <legend>{{trans('lang.app_setting_fedapay')}}</legend>
-                            <div class="form-check width-100">
-                                <input type="checkbox" class="enable_fedapay" id="enable_fedapay">
-                                <label class="col-3 control-label"
-                                       for="enable_fedapay">{{trans('lang.app_setting_enable_fedapay')}}</label>
+        {{-- FORMULAIRE FEDA PAY --}}
+        <div class="card-body">
+            <div class="row restaurant_payout_create">
+                <div class="restaurant_payout_create-inner">
+                    <fieldset>
+                        <legend>{{trans('lang.app_setting_fedapay')}}</legend>
+
+                        {{-- Enable --}}
+                        <div class="form-check width-100">
+                            <input type="checkbox" id="enable_fedapay" class="enable_fedapay">
+                            <label for="enable_fedapay" class="col-3 control-label">
+                                {{trans('lang.app_setting_enable_fedapay')}}
+                            </label>
+                        </div>
+
+                        {{-- Sandbox --}}
+                        <div class="form-check width-100">
+                            <input type="checkbox" id="sand_box_mode" class="sand_box_mode">
+                            <label for="sand_box_mode" class="col-3 control-label">
+                                {{trans('lang.app_setting_enable_sandbox_mode')}}
+                            </label>
+                        </div>
+
+                        {{-- Public Key --}}
+                        <div class="form-group row width-100">
+                            <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_public_key')}}</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control fedapay_publicKey">
                             </div>
-                            <div class="form-check width-100">
-                                <input type="checkbox" class="sand_box_mode" id="sand_box_mode">
-                                <label class="col-3 control-label"
-                                       for="sand_box_mode">{{trans('lang.app_setting_enable_sandbox_mode')}}</label>
+                        </div>
+
+                        {{-- Secret Key --}}
+                        <div class="form-group row width-100">
+                            <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_secret_key')}}</label>
+                            <div class="col-7">
+                                <input type="password" class="form-control fedapay_secretKey">
                             </div>
-                            <div class="form-group row width-100">
-                                <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_public_key')}}</label>
-                                <div class="col-7">
-                                    <input type="password" class="form-control fedapay_publicKey">
-                                    <div class="form-text text-muted">
-                                        {!! trans('lang.app_setting_fedapay_public_key_help') !!}
-                                    </div>
-                                </div>
+                        </div>
+
+                        {{-- Callback URL --}}
+                        <div class="form-group row width-100">
+                            <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_callback_url')}}</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control fedapay_callbackUrl"
+                                       readonly value="{{ url('/api/payment/fedapay/webhook') }}">
                             </div>
-                            <div class="form-group row width-100">
-                                <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_secret_key')}}</label>
-                                <div class="col-7">
-                                    <input type="password" class="form-control fedapay_secretKey">
-                                    <div class="form-text text-muted">
-                                        {!! trans('lang.app_setting_fedapay_secret_key_help') !!}
-                                    </div>
-                                </div>
+                        </div>
+
+                        {{-- Cancel URL --}}
+                        <div class="form-group row width-100">
+                            <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_cancel_url')}}</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control fedapay_cancelUrl" placeholder="{{ url('/payment/cancel') }}">
                             </div>
-                            <div class="form-group row width-100">
-                                <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_callback_url')}}</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control fedapay_callbackUrl">
-                                    <div class="form-text text-muted">
-                                        {!! trans('lang.app_setting_fedapay_callback_url_help') !!}
-                                    </div>
-                                </div>
+                        </div>
+
+                        {{-- Return URL --}}
+                        <div class="form-group row width-100">
+                            <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_return_url')}}</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control fedapay_returnUrl" placeholder="{{ url('/payment/success') }}">
                             </div>
-                            <div class="form-group row width-100">
-                                <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_cancel_url')}}</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control fedapay_cancelUrl">
-                                    <div class="form-text text-muted">
-                                        {!! trans('lang.app_setting_fedapay_cancel_url_help') !!}
-                                    </div>
-                                </div>
+                        </div>
+
+                        {{-- Logo --}}
+                        <div class="form-group row width-100">
+                            <label class="col-3 control-label">{{trans('lang.image')}}</label>
+                            <div class="col-7">
+                                <input type="file" class="form-control fedapay-image" onchange="handleFileSelect(event)">
+                                <div class="placeholder_img_thumb payment_image"></div>
+                                <div id="uploding_image"></div>
                             </div>
-                            <div class="form-group row width-100">
-                                <label class="col-3 control-label">{{trans('lang.app_setting_fedapay_return_url')}}</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control fedapay_returnUrl">
-                                    <div class="form-text text-muted">
-                                        {!! trans('lang.app_setting_fedapay_return_url_help') !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row width-100">
-                                <label class="col-3 control-label">{{trans('lang.image')}}</label>
-                                <div class="col-7">
-                                    <input type="file" class="col-7 form-control fedapay-image"
-                                           onChange="handleFileSelect(event)">
-                                    <div class="form-text text-muted">
-                                        {!! trans('lang.payment_method_image_help') !!}
-                                    </div>
-                                    <div class="placeholder_img_thumb payment_image"></div>
-                                    <div id="uploding_image"></div>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
-            <div class="form-group col-12 text-center btm-btn">
-                <button type="button" class="btn btn-primary edit-setting-btn"><i
-                        class="fa fa-save"></i> {{trans('lang.save')}}</button>
-                <a href="{{url('/dashboard')}}" class="btn btn-default"><i
-                        class="fa fa-undo"></i>{{trans('lang.cancel')}}</a>
-            </div>
         </div>
+
+        {{-- Save --}}
+        <div class="form-group col-12 text-center btm-btn">
+            <button type="button" class="btn btn-primary edit-setting-btn">
+                <i class="fa fa-save"></i>{{ trans('lang.save') }}
+            </button>
+            <a href="{{ url('/dashboard') }}" class="btn btn-default">
+                <i class="fa fa-undo"></i>{{trans('lang.cancel')}}
+            </a>
+        </div>
+
     </div>
+</div>
 @endsection
+
+
 @section('scripts')
-    <script>
-        var database = firebase.firestore();
-        var paymentRef = database.collection('settings').doc('fedapay_settings');
-        var mercadoPagoData = database.collection('settings').doc('MercadoPago');
-        var stripeData = database.collection('settings').doc('stripeSettings');
-        var codData = database.collection('settings').doc('CODSettings');
-        var razorpayData = database.collection('settings').doc('razorpaySettings');
-        var paypalData = database.collection('settings').doc('paypalSettings');
-        var paytmData = database.collection('settings').doc('PaytmSettings');
-        var walletData = database.collection('settings').doc('walletSettings');
-        var payFastSettings = database.collection('settings').doc('payFastSettings');
-        var payStackSettings = database.collection('settings').doc('payStack');
-        var flutterWaveSettings = database.collection('settings').doc('flutterWave');
-        var xenditSettings = database.collection('settings').doc('xendit_settings');
-        var orangePaySettings = database.collection('settings').doc('orange_money_settings');
-        var midtransSettings = database.collection('settings').doc('midtrans_settings');
-        var photo = "";
-        var fileName = "";
-        var ImageFile = "";
-        var storageRef = firebase.storage().ref('images');
-        var storage = firebase.storage();
+<script>
 
-        $(document).ready(function () {
-            $('.setting_menu').addClass('active').attr('aria-expanded', true);
-            $('.setting_payment_menu').addClass('active');
-            $('.setting_sub_menu').addClass('in').attr('aria-expanded', true);
-            jQuery("#overlay").show();
+    var database = firebase.firestore();
+    var paymentRef = database.collection('settings').doc('fedapay_settings');
 
-            paymentRef.get().then(async function (paymentSnapshots) {
-                var payment = paymentSnapshots.data();
-                if (payment.enable) {
-                    $("#enable_fedapay").prop('checked', true);
-                    jQuery(".fedapay_active_label span").addClass('badge-success');
-                    jQuery(".fedapay_active_label span").text('Active');
-                }
-                if (payment.isSandbox) {
-                    $("#sand_box_mode").prop('checked', true);
-                }
-                $('.fedapay_publicKey').val(payment.publicKey);
-                $('.fedapay_secretKey').val(payment.secretKey);
-                $('.fedapay_callbackUrl').val(payment.callbackUrl);
-                $('.fedapay_cancelUrl').val(payment.cancelUrl);
-                $('.fedapay_returnUrl').val(payment.returnUrl);
+    var photo = "";
+    var fileName = "";
+    var ImageFile = "";
+    var storageRef = firebase.storage().ref('images');
 
-                if (payment.hasOwnProperty('image')) {
-                    if (payment.image != '' && payment.image != null) {
-                        $(".payment_image").append('<span class="image-item"><span class="remove-btn"><i class="fa fa-remove"></i></span><img class="rounded" style="width:50px" src="' + payment.image + '" alt="image"></span>');
-                        photo = payment.image;
-                        ImageFile = payment.image;
-                    } else {
-                        photo = "";
-                    }
-                }
-                jQuery("#overlay").hide();
-            })
+    $(document).ready(function () {
 
-            codData.get().then(async function (codSnapshots) {
-                var cod = codSnapshots.data();
-                if (cod.isEnabled) {
-                    jQuery(".cod_active_label span").addClass('badge-success');
-                    jQuery(".cod_active_label span").text('Active');
-                }
-            })
+        // Définir les onglets actifs dans le menu
+        $('.setting_menu').addClass('active').attr('aria-expanded', true);
+        $('.setting_payment_menu').addClass('active');
+        $('.setting_sub_menu').addClass('in').attr('aria-expanded', true);
 
-            razorpayData.get().then(async function (razorpaySnapshots) {
-                var razorpay = razorpaySnapshots.data();
-                if (razorpay.isEnabled) {
-                    jQuery(".razorpay_active_label span").addClass('badge-success');
-                    jQuery(".razorpay_active_label span").text('Active');
-                }
-            })
+        jQuery("#overlay").show();
 
-            flutterWaveSettings.get().then(async function (flutterWaveSnapshots) {
-                var flutterWave = flutterWaveSnapshots.data();
-                if (flutterWave.isEnable) {
-                    jQuery(".flutterWave_active_label span").addClass('badge-success');
-                    jQuery(".flutterWave_active_label span").text('Active');
-                }
-            })
+        // Charger les données FedaPay
+        paymentRef.get().then(function (snapshot) {
+            var data = snapshot.data();
 
-            mercadoPagoData.get().then(async function (mercadoPagoSnapshots) {
-                var mercadoPago = mercadoPagoSnapshots.data();
-                if (mercadoPago.isEnabled) {
-                    jQuery(".mercadopago_active_label span").addClass('badge-success');
-                    jQuery(".mercadopago_active_label span").text('Active');
-                }
-            })
+            if (!data) return;
 
-            payStackSettings.get().then(async function (payStackSnapshots) {
-                var payStack = payStackSnapshots.data();
-                if (payStack.isEnable) {
-                    jQuery(".paystack_active_label span").addClass('badge-success');
-                    jQuery(".paystack_active_label span").text('Active');
-                }
-            })
-
-            payFastSettings.get().then(async function (payfastSnapshots) {
-                var payfast = payfastSnapshots.data();
-                if (payfast.isEnable) {
-                    jQuery(".payfast_active_label span").addClass('badge-success');
-                    jQuery(".payfast_active_label span").text('Active');
-                }
-            })
-
-            paypalData.get().then(async function (paypalSnapshots) {
-                var paypal = paypalSnapshots.data();
-                if (paypal.isEnabled) {
-                    jQuery(".paypal_active_label span").addClass('badge-success');
-                    jQuery(".paypal_active_label span").text('Active');
-                }
-            })
-
-            paytmData.get().then(async function (paytmSnapshots) {
-                var paytm = paytmSnapshots.data();
-                if (paytm.isEnabled) {
-                    jQuery(".paytm_active_label span").addClass('badge-success');
-                    jQuery(".paytm_active_label span").text('Active');
-                }
-            })
-
-            stripeData.get().then(async function (stripSnapshots) {
-                var strip = stripSnapshots.data();
-                if (strip.isEnabled) {
-                    jQuery(".stripe_active_label span").addClass('badge-success');
-                    jQuery(".stripe_active_label span").text('Active');
-                }
-            })
-
-            walletData.get().then(async function (walletSnapshots) {
-                var wallet = walletSnapshots.data();
-                if (wallet.isEnabled) {
-                    jQuery(".wallet_active_label span").addClass('badge-success');
-                    jQuery(".wallet_active_label span").text('Active');
-                }
-            })
-
-            xenditSettings.get().then(async function (xenditSnapshots) {
-                var xendit = xenditSnapshots.data();
-                if (xendit.enable) {
-                    jQuery(".xendit_active_label span").addClass('badge-success');
-                    jQuery(".xendit_active_label span").text('Active');
-                }
-            })
-
-            orangePaySettings.get().then(async function (orangePaySnapshots) {
-                var orangePay = orangePaySnapshots.data();
-                if (orangePay.enable) {
-                    jQuery(".orangepay_active_label span").addClass('badge-success');
-                    jQuery(".orangepay_active_label span").text('Active');
-                }
-            })
-
-            midtransSettings.get().then(async function (midtransSnapshots) {
-                var midtrans = midtransSnapshots.data();
-                if (midtrans.enable) {
-                    jQuery(".midtrans_active_label span").addClass('badge-success');
-                    jQuery(".midtrans_active_label span").text('Active');
-                }
-            })
-        });
-
-        $(".edit-setting-btn").click(function () {
-            var publicKey = $(".fedapay_publicKey").val();
-            var secretKey = $(".fedapay_secretKey").val();
-            var callbackUrl = $(".fedapay_callbackUrl").val();
-            var cancelUrl = $(".fedapay_cancelUrl").val();
-            var returnUrl = $(".fedapay_returnUrl").val();
-            var isEnabled = $("#enable_fedapay").is(":checked");
-            var isSandBox = $("#sand_box_mode").is(":checked");
-
-            storeImageData().then(IMG => {
-                database.collection('settings').doc("fedapay_settings").update({
-                    'enable': isEnabled,
-                    'isSandbox': isSandBox,
-                    'publicKey': publicKey,
-                    'secretKey': secretKey,
-                    'callbackUrl': callbackUrl,
-                    'cancelUrl': cancelUrl,
-                    'returnUrl': returnUrl,
-                    'image': IMG
-                }).then(function (result) {
-                    window.location.href = '{{ url("settings/payment/fedapay")}}';
-                });
-            }).catch(err => {
-                jQuery("#overlay").hide();
-                $(".error_top").show();
-                $(".error_top").html("");
-                $(".error_top").append("<p>" + err + "</p>");
-                window.scrollTo(0, 0);
-            });
-        });
-
-        async function storeImageData() {
-            var newPhoto = '';
-            try {
-                if (ImageFile != "" && photo != ImageFile) {
-                    var OldImageUrlRef = await storage.refFromURL(ImageFile);
-                    imageBucket = OldImageUrlRef.bucket;
-                    var envBucket = "<?php echo env('FIREBASE_STORAGE_BUCKET'); ?>";
-                    if (imageBucket == envBucket) {
-                        await OldImageUrlRef.delete().then(() => {
-                            console.log("Old file deleted!")
-                        }).catch((error) => {
-                            console.log("ERR File delete ===", error);
-                        });
-                    } else {
-                        console.log('Bucket not matched');
-                    }
-                }
-                if (photo != ImageFile) {
-                    photo = photo.replace(/^data:image\/[a-z]+;base64,/, "")
-                    var uploadTask = await storageRef.child(fileName).putString(photo, 'base64', {
-                        contentType: 'image/jpg'
-                    });
-                    var downloadURL = await uploadTask.ref.getDownloadURL();
-                    newPhoto = downloadURL;
-                    photo = downloadURL;
-                } else {
-                    newPhoto = photo;
-                }
-            } catch (error) {
-                console.log("ERR ===", error);
+            if (data.enable) {
+                $("#enable_fedapay").prop("checked", true);
+                $(".fedapay_active_label span").addClass("badge-success").text("Active");
             }
-            return newPhoto;
-        }
 
-        function handleFileSelect(evt) {
-            var f = evt.target.files[0];
-            var reader = new FileReader();
-            reader.onload = (function (theFile) {
-                return function (e) {
-                    var filePayload = e.target.result;
-                    var val = f.name;
-                    var ext = val.split('.')[1];
-                    var docName = val.split('fakepath')[1];
-                    var filename = (f.name).replace(/C:\\fakepath\\/i, '')
-                    var timestamp = Number(new Date());
-                    var filename = filename.split('.')[0] + "_" + timestamp + '.' + ext;
-                    photo = filePayload;
-                    fileName = filename;
-                    $(".payment_image").empty();
-                    $(".payment_image").append('<span class="image-item"><span class="remove-btn"><i class="fa fa-remove"></i></span><img class="rounded" style="width:50px" src="' + filePayload + '" alt="image"></span>');
-                };
-            })(f);
-            reader.readAsDataURL(f);
-        }
-    </script>
+            if (data.isSandbox) {
+                $("#sand_box_mode").prop("checked", true);
+            }
+
+            $(".fedapay_publicKey").val(data.publicKey);
+            $(".fedapay_secretKey").val(data.secretKey);
+            $(".fedapay_cancelUrl").val(data.cancelUrl);
+            $(".fedapay_returnUrl").val(data.returnUrl);
+
+            // Image affichée
+            if (data.image) {
+                $(".payment_image").html(
+                    `<span class="image-item">
+                        <span class="remove-btn"><i class="fa fa-remove"></i></span>
+                        <img class="rounded" style="width:50px" src="${data.image}" alt="image">
+                    </span>`
+                );
+                photo = data.image;
+                ImageFile = data.image;
+            }
+
+            jQuery("#overlay").hide();
+        });
+
+    });
+
+    // Enregistrement
+    $(".edit-setting-btn").click(function () {
+
+        var isEnabled = $("#enable_fedapay").is(":checked");
+        var isSandbox = $("#sand_box_mode").is(":checked");
+        var publicKey = $(".fedapay_publicKey").val();
+        var secretKey = $(".fedapay_secretKey").val();
+        var cancelUrl = $(".fedapay_cancelUrl").val();
+        var returnUrl = $(".fedapay_returnUrl").val();
+        var callbackUrl = $(".fedapay_callbackUrl").val();
+
+        storeImageData().then((IMG) => {
+
+            paymentRef.update({
+                "enable": isEnabled,
+                "isSandbox": isSandbox,
+                "publicKey": publicKey,
+                "secretKey": secretKey,
+                "callbackUrl": callbackUrl,
+                "cancelUrl": cancelUrl,
+                "returnUrl": returnUrl,
+                "image": IMG
+            }).then(() => {
+                window.location.href = '{{ url("settings/payment/fedapay") }}';
+            });
+
+        });
+    });
+
+    async function storeImageData() {
+        var newPhoto = "";
+        try {
+            if (ImageFile && photo !== ImageFile) {
+                var OldRef = await firebase.storage().refFromURL(ImageFile);
+                await OldRef.delete().catch(err => console.log(err));
+            }
+
+            if (photo && photo !== ImageFile) {
+                var clean = photo.replace(/^data:image\/[a-z]+;base64,/, "");
+                var upload = await storageRef.child(fileName).putString(clean, "base64", { contentType: "image/jpg" });
+                newPhoto = await upload.ref.getDownloadURL();
+                photo = newPhoto;
+            } else {
+                newPhoto = photo;
+            }
+
+        } catch (e) { console.log(e); }
+
+        return newPhoto;
+    }
+
+    function handleFileSelect(evt) {
+        var f = evt.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            var base64 = e.target.result;
+            var ext = f.name.split('.').pop();
+            var timestamp = Date.now();
+            fileName = f.name.replace(/C:\\fakepath\\/i, '').split('.')[0] + "_" + timestamp + "." + ext;
+
+            photo = base64;
+
+            $(".payment_image").html(`
+                <span class="image-item">
+                    <span class="remove-btn"><i class="fa fa-remove"></i></span>
+                    <img class="rounded" style="width:50px" src="${base64}" alt="image">
+                </span>
+            `);
+        };
+
+        reader.readAsDataURL(f);
+    }
+
+</script>
 @endsection

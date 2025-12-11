@@ -3097,4 +3097,29 @@ return [
     
     "setting_api_secure_key_error" => "Veuillez ajouter votre clé sécurisée API",
 
+    // FedaPay
+    'app_setting_fedapay' => "FedaPay",
+    'app_setting_enable_fedapay' => "Activer FedaPay",
+    'app_setting_enable_fedapay_help' => "Activez cette option pour permettre aux utilisateurs de payer via FedaPay.",
+
+    'app_setting_enable_sandbox_mode' => "Activer le mode Sandbox",
+    'app_setting_enable_sandbox_mode_help' => "Utilisez cette option pour tester les paiements sans transactions réelles.",
+
+    'app_setting_fedapay_public_key' => "Clé publique FedaPay",
+    'app_setting_fedapay_public_key_help' => "Insérez votre clé publique FedaPay (commence par pk_test_ ou pk_live_).",
+
+    'app_setting_fedapay_secret_key' => "Clé secrète FedaPay",
+    'app_setting_fedapay_secret_key_help' => "Insérez votre clé secrète FedaPay (commence par sk_test_ ou sk_live_).",
+
+    'app_setting_fedapay_callback_url' => "URL de callback (Webhook)",
+    'app_setting_fedapay_callback_url_help' => "Copiez cette URL dans votre tableau de bord FedaPay pour recevoir les confirmations de paiement.",
+
+    'app_setting_fedapay_cancel_url' => "URL d’annulation",
+    'app_setting_fedapay_cancel_url_help' => "URL utilisée lorsque l'utilisateur annule son paiement.",
+
+    'app_setting_fedapay_return_url' => "URL de retour",
+    'app_setting_fedapay_return_url_help' => "L’utilisateur sera redirigé vers cette page après paiement réussi.",
+
+
+
 ];

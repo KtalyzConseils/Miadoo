@@ -75,6 +75,12 @@
                                 class="badge ml-2"></span></a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link fedapay_active_label"
+                        href="{!! url('settings/payment/fedapay') !!}"><i
+                                class="fa fa-envelope-o mr-2"></i>{{trans('lang.app_setting_fedapay')}}<span
+                                class="badge ml-2"></span></a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link midtrans_active_label"
                            href="{!! url('settings/payment/midtrans') !!}"><i
                                 class="fa fa-envelope-o mr-2"></i>{{trans('lang.app_setting_midtrans')}}<span

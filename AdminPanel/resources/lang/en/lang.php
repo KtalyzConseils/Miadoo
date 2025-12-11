@@ -2655,6 +2655,30 @@ return [
     "setting_api_secure_key" => "API Secure Key (App Usage)",
     "setting_api_secure_key_help" => "You can add any very strong secure key. For example: PSqUCdwsFMnGGfUzGKwT5MT5g",
     "setting_api_secure_key_error" => "Please add your API Secure Key",
+
+    // FedaPay
+    'app_setting_fedapay' => "FedaPay",
+    'app_setting_enable_fedapay' => "Enable FedaPay",
+    'app_setting_enable_fedapay_help' => "Enable this option to allow users to pay via FedaPay.",
+
+    'app_setting_enable_sandbox_mode' => "Enable Sandbox Mode",
+    'app_setting_enable_sandbox_mode_help' => "Use this mode to test payments without real transactions.",
+
+    'app_setting_fedapay_public_key' => "FedaPay Public Key",
+    'app_setting_fedapay_public_key_help' => "Enter your FedaPay public key (starts with pk_test_ or pk_live_).",
+
+    'app_setting_fedapay_secret_key' => "FedaPay Secret Key",
+    'app_setting_fedapay_secret_key_help' => "Enter your FedaPay secret key (starts with sk_test_ or sk_live_).",
+
+    'app_setting_fedapay_callback_url' => "Callback (Webhook) URL",
+    'app_setting_fedapay_callback_url_help' => "Copy this URL into your FedaPay dashboard to receive payment confirmations.",
+
+    'app_setting_fedapay_cancel_url' => "Cancel URL",
+    'app_setting_fedapay_cancel_url_help' => "URL used when the user cancels the payment process.",
+
+    'app_setting_fedapay_return_url' => "Return URL",
+    'app_setting_fedapay_return_url_help' => "The user will be redirected to this page after a successful payment.",
+
 ];
 ?>
 
